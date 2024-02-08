@@ -39,15 +39,11 @@ class BlogPlugin extends BasePlugin
      */
     public function routes(RouteBuilder $routes): void
     {
-        $routes->plugin(
-            'Blog',
-            ['path' => '/blog'],
-            function (RouteBuilder $builder) {
-                // Add custom routes here
-
-                $builder->fallbacks();
-            }
-        );
+        $routes->get('/', 'Blog.Materials::index');
+        $routes->get('/material/{slug}', 'Blog.Materials::item')
+            ->setPatterns(['slug' => '[a-z0-9-_]+'])
+            ->setPass(['slug']);
+            
         parent::routes($routes);
     }
 
