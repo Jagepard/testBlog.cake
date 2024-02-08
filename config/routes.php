@@ -31,9 +31,4 @@ use Cake\Routing\RouteBuilder;
  */
 return function (RouteBuilder $routes): void {
 
-    $routes->get('/', 'Blog.Materials::index');
-    $routes->get('/material/{slug}', 'Blog.Materials::item')
-        ->setPatterns(['slug' => '[a-z0-9-_]+'])
-        ->setPass(['slug']);
-        
 };

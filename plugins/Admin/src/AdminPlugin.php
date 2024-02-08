@@ -39,15 +39,7 @@ class AdminPlugin extends BasePlugin
      */
     public function routes(RouteBuilder $routes): void
     {
-        $routes->plugin(
-            'Admin',
-            ['path' => '/admin'],
-            function (RouteBuilder $builder) {
-                // Add custom routes here
 
-                $builder->fallbacks();
-            }
-        );
         parent::routes($routes);
     }
 
