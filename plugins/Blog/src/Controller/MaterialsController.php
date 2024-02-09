@@ -8,6 +8,10 @@ use Blog\Controller\AppController;
 
 class MaterialsController extends AppController
 {
+    protected array $paginate = [
+        'maxLimit' => 2
+    ];
+
     public function index()
     {
         $query     = $this->Materials->find();
