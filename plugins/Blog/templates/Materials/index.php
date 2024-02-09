@@ -18,4 +18,16 @@
 
 <?php endforeach; ?>
 
-</div>
+<?php if (!empty($this->Paginator->numbers())) : ?>
+<nav aria-label="Page navigation example">
+  <ul class="pagination">
+    <?php 
+      echo $this->Paginator->first();
+      echo $this->Paginator->prev();
+      echo $this->Paginator->numbers();
+      echo $this->Paginator->next();
+      echo $this->Paginator->last();
+    ?>
+  </ul>
+</nav>
+<?php endif; ?>
