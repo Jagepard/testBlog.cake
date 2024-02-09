@@ -42,6 +42,9 @@ class AdminPlugin extends BasePlugin
         $routes->scope('/admin', ['plugin' => 'Admin'], function (RouteBuilder $routes) {
 
             $routes->get('/', 'Materials::index');
+            $routes->get('/materials', 'Materials::index');
+            $routes->get('/material/add', 'Materials::add');
+            $routes->post('/material/create', 'Materials::create');
         });
 
         parent::routes($routes);
