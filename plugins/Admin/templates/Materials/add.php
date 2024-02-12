@@ -1,7 +1,6 @@
 <br>
 <form action="<?= $this->Url->build('admin/material/create'); ?>" method="post" enctype="multipart/form-data">
 <input type='hidden' name='_csrfToken' value='<?= $this->request->getAttribute('csrfToken'); ?>'>
-<input type='hidden' name='redirect'>
 <div class="mb-3">
     <label for="file" class="form-label">Фото</label>
     <input type="file" name="file" id="file">

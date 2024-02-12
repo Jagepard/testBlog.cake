@@ -13,8 +13,8 @@
     <td><p><?= $material['title']?></p></td>
     <td>
     <div class="btn-group" role="group" aria-label="Basic mixed styles example">
-        <a href="<?= $this->Url->build(); ?>/material/edit/<?= $material['id'] ?>_<?= $material['slug'] ?>"><button type="button" class="btn btn-success">edit</button></a>
-        <a href="<?= $this->Url->build(); ?>/material/delete?id=<?= $material['id'] ?>"><button type="button" class="btn btn-danger">delete</button></a>
+        <a href="<?= $this->Url->build("admin/material/edit/{$material['id']}"); ?>"><button type="button" class="btn btn-success">edit</button></a>
+        <a href="<?= $this->Url->build("admin/material/delete/{$material['id']}"); ?>"><button type="button" class="btn btn-danger">delete</button></a>
     </div>
     </td>
     </tr>

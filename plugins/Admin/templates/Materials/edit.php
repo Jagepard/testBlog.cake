@@ -1,38 +1,36 @@
-<?php
-/**
- * @var \App\View\AppView $this
- * @var \Cake\Datasource\EntityInterface $material
- */
-?>
-<div class="row">
-    <aside class="column">
-        <div class="side-nav">
-            <h4 class="heading"><?= __('Actions') ?></h4>
-            <?= $this->Form->postLink(
-                __('Delete'),
-                ['action' => 'delete', $material->id],
-                ['confirm' => __('Are you sure you want to delete # {0}?', $material->id), 'class' => 'side-nav-item']
-            ) ?>
-            <?= $this->Html->link(__('List Materials'), ['action' => 'index'], ['class' => 'side-nav-item']) ?>
-        </div>
-    </aside>
-    <div class="column column-80">
-        <div class="materials form content">
-            <?= $this->Form->create($material) ?>
-            <fieldset>
-                <legend><?= __('Edit Material') ?></legend>
-                <?php
-                    echo $this->Form->control('slug');
-                    echo $this->Form->control('title');
-                    echo $this->Form->control('text');
-                    echo $this->Form->control('image');
-                    echo $this->Form->control('status');
-                    echo $this->Form->control('created_at');
-                    echo $this->Form->control('updated_at');
-                ?>
-            </fieldset>
-            <?= $this->Form->button(__('Submit')) ?>
-            <?= $this->Form->end() ?>
-        </div>
-    </div>
-</div>
+<br>
+<?php if (!empty($material['image'])): ?>
+  <img src="<?= $this->Url->build('/'); ?>/images/<?= $material['image']?>" height="250">
+  <a href="<?= $this->Url->build('admin'); ?>/material/delimg?id=<?= $material['id'] ?>"><button type="button" class="btn btn-danger">delete</button></a>
+<?php endif; ?>
+<form action="<?= $this->Url->build("admin/material/update/{$material['id']}"); ?>" method="post" enctype="multipart/form-data">
+<input type='hidden' name='_csrfToken' value='<?= $this->request->getAttribute('csrfToken'); ?>'>
+
+<input type='hidden' name='image' value='<?= $material['image']?>'>
+<br>
+  <div class="mb-3">
+    <label for="file" class="form-label">Фото</label>
+    <input type="file" name="file" id="file">
+  </div>
+  <div class="mb-3">
+    <label for="title" class="form-label">Заголовок</label>
+    <input type="text" class="form-control" id="title" name="title" value="<?= $material['title']?>">
+  </div>
+  <div class="mb-3">
+    <label for="slug" class="form-label">slug</label>
+    <input type="text" class="form-control" id="slug" name="slug" value="<?= $material['slug']?>" disabled>
+  </div>
+  <div class="mb-3">
+    <label for="editor" class="form-label">Текст</label>
+    <textarea class="form-control" id="editor" name="text"><?= $material['text']?></textarea>
+    <script src="https://cdn.ckeditor.com/ckeditor5/36.0.1/classic/ckeditor.js"></script>
+    <script>
+    ClassicEditor
+        .create( document.querySelector( '#editor' ) )
+        .catch( error => {
+            console.error( error );
+        } );
+    </script>
+  </div>
+  <button type="submit" class="btn btn-primary">Обновить</button>
+</form>

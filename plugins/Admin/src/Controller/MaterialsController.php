@@ -44,46 +44,52 @@ class MaterialsController extends AppController
 
         if ($this->Materials->save($material)) {
             $this->Flash->success(__('The material has been saved.'));
-
-            return $this->redirect(['action' => 'index']);
+        } else {
+            $this->Flash->error(__('The material could not be saved. Please, try again.'));
         }
 
-        $this->Flash->error(__('The material could not be saved. Please, try again.'));
+        return $this->redirect(['action' => 'index']);
     }
 
-    /**
-     * Edit method
-     *
-     * @param string|null $id Material id.
-     * @return \Cake\Http\Response|null|void Redirects on successful edit, renders view otherwise.
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
-     */
     public function edit($id = null)
     {
         $material = $this->Materials->get($id, contain: []);
-        if ($this->request->is(['patch', 'post', 'put'])) {
-            $material = $this->Materials->patchEntity($material, $this->request->getData());
-            if ($this->Materials->save($material)) {
-                $this->Flash->success(__('The material has been saved.'));
+        $title    = "testBlog.cake:: Admin";
 
-                return $this->redirect(['action' => 'index']);
-            }
-            $this->Flash->error(__('The material could not be saved. Please, try again.'));
-        }
-        $this->set(compact('material'));
+        $this->set(compact('title', 'material'));
+        $this->viewBuilder()->setLayout('Admin.default');
     }
 
-    /**
-     * Delete method
-     *
-     * @param string|null $id Material id.
-     * @return \Cake\Http\Response|null Redirects to index.
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
-     */
+    public function update($id = null)
+    {
+        if ($this->request->is(['patch', 'post', 'put'])) {
+
+            $material = $this->Materials->get($id, contain: []);
+
+            $data = [
+                'title' => $this->request->getData('title'),
+                'text'  => $this->request->getData('text'),
+                'slug'  => SlugHelper::translit($this->request->getData('text'))
+            ];
+
+            $material = $this->Materials->patchEntity($material, $data);
+
+            if ($this->Materials->save($material)) {
+                $this->Flash->success(__('The material has been saved.'));
+            } else {
+                $this->Flash->error(__('The material could not be saved. Please, try again.'));
+            }
+
+            return $this->redirect(['action' => 'index']);
+        }
+    }
+
     public function delete($id = null)
     {
-        $this->request->allowMethod(['post', 'delete']);
+        $this->request->allowMethod(['get', 'delete']);
+
         $material = $this->Materials->get($id);
+
         if ($this->Materials->delete($material)) {
             $this->Flash->success(__('The material has been deleted.'));
         } else {
