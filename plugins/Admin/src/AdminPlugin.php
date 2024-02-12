@@ -45,6 +45,15 @@ class AdminPlugin extends BasePlugin
             $routes->get('/materials', 'Materials::index');
             $routes->get('/material/add', 'Materials::add');
             $routes->post('/material/create', 'Materials::create');
+            $routes->get('/material/edit/{id}', 'Materials::edit')
+                ->setPatterns(['id' => '[0-9]+'])
+                ->setPass(['id']);
+            $routes->post('/material/update/{id}', 'Materials::update')
+                ->setPatterns(['id' => '[0-9]+'])
+                ->setPass(['id']);
+            $routes->get('/material/delete/{id}', 'Materials::delete')
+                ->setPatterns(['id' => '[0-9]+'])
+                ->setPass(['id']);
         });
 
         parent::routes($routes);

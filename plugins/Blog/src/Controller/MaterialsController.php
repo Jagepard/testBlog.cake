@@ -9,7 +9,7 @@ use Blog\Controller\AppController;
 class MaterialsController extends AppController
 {
     protected array $paginate = [
-        'maxLimit' => 2
+        'maxLimit' => 10
     ];
 
     public function index()
