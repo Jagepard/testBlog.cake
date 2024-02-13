@@ -30,5 +30,9 @@ use Cake\Routing\RouteBuilder;
   * if required.
  */
 return function (RouteBuilder $routes): void {
-
+    $routes->get('login', 'Users::login');
+    $routes->post('login', 'Users::login');
+    $routes->get('logout', 'Users::logout');
+    $routes->get('user/add', 'Users::add');
+    $routes->post('user/add', 'Users::add');
 };

@@ -5,11 +5,15 @@ namespace Blog\Controller;
 
 use App\View\Helper\SlugHelper;
 use Blog\Controller\AppController;
+use Migrations\Command\Phinx\Dump;
 
 class MaterialsController extends AppController
 {
     protected array $paginate = [
-        'maxLimit' => 10
+        'maxLimit' => 10,
+        'order' => [
+            'Materials.id' => 'desc'
+        ]
     ];
 
     public function index()
