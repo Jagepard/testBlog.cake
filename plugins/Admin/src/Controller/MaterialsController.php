@@ -9,24 +9,31 @@ use Admin\View\Helper\SlugHelper;
 class MaterialsController extends AppController
 {
     protected array $paginate = [
-        'maxLimit' => 3
+        'maxLimit' => 3,
+        'order' => [
+            'Materials.id' => 'desc'
+        ]
     ];
 
     public function index()
     {
-        $query     = $this->Materials->find();
-        $materials = $this->paginate($query);
-        $title     = "testBlog.cake:: Admin";
+        $parameters = $this->request->getAttribute('authenticationResult');
+        $userName   = ($parameters->isValid()) ? $parameters->getData()->email : '';
+        $query      = $this->Materials->find();
+        $materials  = $this->paginate($query);
+        $title      = "testBlog.cake:: Admin";
 
-        $this->set(compact('materials', 'title'));
+        $this->set(compact('materials', 'title', 'userName'));
         $this->viewBuilder()->setLayout('Admin.default');
     }
 
     public function add()
     {
-        $title = "testBlog.cake:: Admin";
+        $title      = "testBlog.cake:: Admin - add material";
+        $parameters = $this->request->getAttribute('authenticationResult');
+        $userName   = ($parameters->isValid()) ? $parameters->getData()->email : '';
 
-        $this->set(compact('title'));
+        $this->set(compact('title', 'userName'));
         $this->viewBuilder()->setLayout('Admin.default');
     }
 
@@ -37,7 +44,7 @@ class MaterialsController extends AppController
         $data = [
             'title' => $this->request->getData('title'),
             'text'  => $this->request->getData('text'),
-            'slug'  => SlugHelper::translit($this->request->getData('text'))
+            'slug'  => SlugHelper::translit($this->request->getData('title'))
         ];
 
         $material = $this->Materials->patchEntity($material, $data);
@@ -53,10 +60,12 @@ class MaterialsController extends AppController
 
     public function edit($id = null)
     {
-        $material = $this->Materials->get($id, contain: []);
-        $title    = "testBlog.cake:: Admin";
+        $material  = $this->Materials->get($id, contain: []);
+        $title      = "testBlog.cake:: Admin - update {$material->title}";
+        $parameters = $this->request->getAttribute('authenticationResult');
+        $userName   = ($parameters->isValid()) ? $parameters->getData()->email : '';
 
-        $this->set(compact('title', 'material'));
+        $this->set(compact('title', 'material', 'userName'));
         $this->viewBuilder()->setLayout('Admin.default');
     }
 
@@ -69,7 +78,7 @@ class MaterialsController extends AppController
             $data = [
                 'title' => $this->request->getData('title'),
                 'text'  => $this->request->getData('text'),
-                'slug'  => SlugHelper::translit($this->request->getData('text'))
+                'slug'  => SlugHelper::translit($this->request->getData('title'))
             ];
 
             $material = $this->Materials->patchEntity($material, $data);

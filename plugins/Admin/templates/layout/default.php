@@ -16,7 +16,7 @@
         </div>
         <div class="col border">
         <?php if(true) : ?>
-            <p>Вы вошли как: <i></i></p>
+            <p>Вы вошли как: <i><?= $userName; ?></i></p>
             <a href="/logout">Выйти</a>
         <?php endif; ?>
         </div>
