@@ -9,7 +9,7 @@
 <?php foreach($materials as $material): ?>
     <tr>
     <td><p><?= $material['id']?></p></td>
-    <td><?php if (!empty($material['image'])): ?><img src="<?= $this->Url->build(); ?>/images/thumb/<?= $material['image']?>"><?php endif; ?></td>
+    <td><?php if (!empty($material['image'])): ?><img src="<?= $this->Url->buildFromPath('Blog.Materials::index') ?>uploads/thumb/<?= $material['image']?>"><?php endif; ?></td>
     <td><p><?= $material['title']?></p></td>
     <td>
     <div class="btn-group" role="group" aria-label="Basic mixed styles example">

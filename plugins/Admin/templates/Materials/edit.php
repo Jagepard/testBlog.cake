@@ -5,7 +5,6 @@
 <?php endif; ?>
 <form action="<?= $this->Url->build("admin/material/update/{$material['id']}"); ?>" method="post" enctype="multipart/form-data">
 <input type='hidden' name='_csrfToken' value='<?= $this->request->getAttribute('csrfToken'); ?>'>
-
 <input type='hidden' name='image' value='<?= $material['image']?>'>
 <br>
   <div class="mb-3">
