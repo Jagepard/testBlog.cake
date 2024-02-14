@@ -54,6 +54,7 @@ class AdminPlugin extends BasePlugin
             $routes->get('/material/delete/{id}', 'Materials::delete')
                 ->setPatterns(['id' => '[0-9]+'])
                 ->setPass(['id']);
+            $routes->get('/material/delimg', 'Materials::delimg');
         });
 
         parent::routes($routes);

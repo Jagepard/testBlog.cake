@@ -4,12 +4,11 @@ declare(strict_types=1);
 namespace Admin\Controller;
 
 use Admin\Controller\AppController;
-use Admin\View\Helper\SlugHelper;
 
 class MaterialsController extends AppController
 {
     protected array $paginate = [
-        'maxLimit' => 3,
+        'maxLimit' => 10,
         'order' => [
             'Materials.id' => 'desc'
         ]
@@ -39,9 +38,9 @@ class MaterialsController extends AppController
 
     public function create()
     {
-        $material   = $this->Materials->newEmptyEntity();
-        $img = $this->request->getData('file');
-        $imgName = $img->getClientFilename();
+        $material = $this->Materials->newEmptyEntity();
+        $img      = $this->request->getData('file');
+        $imgName  = $img->getClientFilename();
 
         $data = [
             'title' => $this->request->getData('title'),
@@ -52,7 +51,8 @@ class MaterialsController extends AppController
         if(!empty($imgName)) {
             $imgName       = time() . '_' . $imgName;
             $data['image'] = $imgName;
-            $img->moveTo(WWW_ROOT . 'uploads/' . $imgName);
+
+            $this->Image->create($img, $imgName);
         }
 
         $material = $this->Materials->patchEntity($material, $data);
@@ -68,7 +68,7 @@ class MaterialsController extends AppController
 
     public function edit($id = null)
     {
-        $material  = $this->Materials->get($id, contain: []);
+        $material   = $this->Materials->get($id, contain: []);
         $title      = "testBlog.cake:: Admin - update {$material->title}";
         $parameters = $this->request->getAttribute('authenticationResult');
         $userName   = ($parameters->isValid()) ? $parameters->getData()->email : '';
@@ -82,12 +82,28 @@ class MaterialsController extends AppController
         if ($this->request->is(['patch', 'post', 'put'])) {
 
             $material = $this->Materials->get($id, contain: []);
+            $oldImage = $this->request->getData('image');
+            $img      = $this->request->getData('file');
+            $imgName  = $img->getClientFilename();
 
             $data = [
                 'title' => $this->request->getData('title'),
                 'text'  => $this->request->getData('text'),
                 'slug'  => $this->Slug->translit($this->request->getData('title'))
             ];
+
+            if(!empty($img->getClientFilename())) {
+                if (!empty($oldImage)) {
+                    $this->Image->delete($oldImage);
+                }
+
+                $imgName       = time() . '_' . $img->getClientFilename();
+                $data['image'] = $imgName;
+    
+                $this->Image->create($img, $imgName);
+            } else {
+                $data['image'] = $oldImage;
+            }
 
             $material = $this->Materials->patchEntity($material, $data);
 
@@ -104,14 +120,25 @@ class MaterialsController extends AppController
     public function delete($id = null)
     {
         $this->request->allowMethod(['get', 'delete']);
-
         $material = $this->Materials->get($id);
 
+        if(!empty($material['image'])) $this->Image->delete($material['image']);
         if ($this->Materials->delete($material)) {
             $this->Flash->success(__('The material has been deleted.'));
         } else {
             $this->Flash->error(__('The material could not be deleted. Please, try again.'));
         }
+
+        return $this->redirect(['action' => 'index']);
+    }
+
+    public function delimg()
+    {
+        $material = $this->Materials->get($this->request->getQuery('id'));
+
+        $this->Image->delete($material['image']);
+        $this->Materials->patchEntity($material, ['image' => '']);
+        $this->Materials->save($material);
 
         return $this->redirect(['action' => 'index']);
     }

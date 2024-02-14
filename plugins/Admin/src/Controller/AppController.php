@@ -11,5 +11,6 @@ class AppController extends BaseController
     {
         parent::beforeFilter($event);
         $this->loadComponent('Admin.Slug');
+        $this->loadComponent('Admin.Image');
     }
 }
