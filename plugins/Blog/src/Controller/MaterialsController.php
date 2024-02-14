@@ -3,9 +3,7 @@ declare(strict_types=1);
 
 namespace Blog\Controller;
 
-use App\View\Helper\SlugHelper;
 use Blog\Controller\AppController;
-use Migrations\Command\Phinx\Dump;
 
 class MaterialsController extends AppController
 {
@@ -28,7 +26,7 @@ class MaterialsController extends AppController
 
     public function item($slug = null)
     {
-        $id       = SlugHelper::getIdFromSlug($slug);
+        $id       = $this->Slug->getIdFromSlug($slug);
         $material = $this->Materials->get($id, contain: []);
         $title    = 'testBlog.cake:: ' . $material['title'];
 

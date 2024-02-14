@@ -1,23 +1,24 @@
 <?php
 declare(strict_types=1);
 
-namespace Admin\View\Helper;
+namespace Admin\Controller\Component;
 
-use Cake\View\Helper;
-use Cake\View\View;
+use Cake\Controller\Component;
+use Cake\Controller\ComponentRegistry;
 
 /**
- * Slug helper
+ * Slug component
  */
-class SlugHelper extends Helper
+class SlugComponent extends Component
 {
-    public static function getIdFromSlug(string $slug): string
-    {
-        $slug = strip_tags($slug);
-        return (strpos($slug, '_') !== false) ? strstr($slug, '_', true) : $slug;
-    }
+    /**
+     * Default configuration.
+     *
+     * @var array<string, mixed>
+     */
+    protected array $_defaultConfig = [];
 
-    public static function translit(string $value)
+    public function translit(string $value)
     {
         $converter = [
             'а' => 'a', 'б' => 'b', 'в' => 'v', 'г' => 'g', 'д' => 'd',
