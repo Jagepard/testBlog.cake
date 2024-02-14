@@ -7,7 +7,9 @@
     <div class="col">
     <div class="card">
     <a href="<?= $this->Url->build('material'); ?>/<?= $material['id'] ?>_<?= $material['slug'] ?>">
-    <img src="<?= $this->Url->build('images'); ?>/<?= $material['image'] ?>" class="card-img-top" alt="<?= $material['title']?>">
+    <?php if (!empty($material['image'])): ?>
+    <img src="<?= $this->Url->buildFromPath('Blog.Materials::index') ?>uploads/<?= $material['image'] ?>" class="card-img-top" alt="<?= $material['title']?>">
+    <?php endif; ?>
     </a>
       <div class="card-body">
         <h5 class="card-title"><a class="link-secondary link-underline link-underline-opacity-0" href="<?= $this->Url->build('material'); ?>/<?= $material['id'] ?>_<?= $material['slug'] ?>"><?= $material['title']?></a></h5>
