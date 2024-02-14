@@ -39,13 +39,21 @@ class MaterialsController extends AppController
 
     public function create()
     {
-        $material = $this->Materials->newEmptyEntity();
+        $material   = $this->Materials->newEmptyEntity();
+        $img = $this->request->getData('file');
+        $imgName = $img->getClientFilename();
 
         $data = [
             'title' => $this->request->getData('title'),
             'text'  => $this->request->getData('text'),
             'slug'  => SlugHelper::translit($this->request->getData('title'))
         ];
+
+        if(!empty($imgName)) {
+            $imgName       = time() . '_' . $imgName;
+            $data['image'] = $imgName;
+            $img->moveTo(WWW_ROOT . 'uploads/' . $imgName);
+        }
 
         $material = $this->Materials->patchEntity($material, $data);
 

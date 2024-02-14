@@ -1,6 +1,6 @@
 <br>
 <?php if (!empty($material['image'])): ?>
-  <img src="<?= $this->Url->build('/'); ?>/images/<?= $material['image']?>" height="250">
+  <img src="<?= $this->Url->buildFromPath('Blog.Materials::index') ?>uploads/<?= $material['image']?>" height="250">
   <a href="<?= $this->Url->build('admin'); ?>/material/delimg?id=<?= $material['id'] ?>"><button type="button" class="btn btn-danger">delete</button></a>
 <?php endif; ?>
 <form action="<?= $this->Url->build("admin/material/update/{$material['id']}"); ?>" method="post" enctype="multipart/form-data">
