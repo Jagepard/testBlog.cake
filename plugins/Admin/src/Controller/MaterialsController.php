@@ -46,7 +46,7 @@ class MaterialsController extends AppController
         $data = [
             'title' => $this->request->getData('title'),
             'text'  => $this->request->getData('text'),
-            'slug'  => SlugHelper::translit($this->request->getData('title'))
+            'slug'  => $this->Slug->translit($this->request->getData('title'))
         ];
 
         if(!empty($imgName)) {
@@ -86,7 +86,7 @@ class MaterialsController extends AppController
             $data = [
                 'title' => $this->request->getData('title'),
                 'text'  => $this->request->getData('text'),
-                'slug'  => SlugHelper::translit($this->request->getData('title'))
+                'slug'  => $this->Slug->translit($this->request->getData('title'))
             ];
 
             $material = $this->Materials->patchEntity($material, $data);

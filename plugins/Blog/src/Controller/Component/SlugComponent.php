@@ -1,15 +1,15 @@
 <?php
 declare(strict_types=1);
 
-namespace App\View\Helper;
+namespace Blog\Controller\Component;
 
-use Cake\View\Helper;
-use Cake\View\View;
+use Cake\Controller\Component;
+use Cake\Controller\ComponentRegistry;
 
 /**
- * Slug helper
+ * Slug component
  */
-class SlugHelper extends Helper
+class SlugComponent extends Component
 {
     /**
      * Default configuration.
@@ -18,7 +18,7 @@ class SlugHelper extends Helper
      */
     protected array $_defaultConfig = [];
 
-    public static function getIdFromSlug(string $slug): string
+    public function getIdFromSlug(string $slug): string
     {
         $slug = strip_tags($slug);
 

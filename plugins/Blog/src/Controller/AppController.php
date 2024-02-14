@@ -10,6 +10,7 @@ class AppController extends BaseController
     public function beforeFilter(\Cake\Event\EventInterface $event)
     {
         parent::beforeFilter($event);
+        $this->loadComponent('Blog.Slug');
         $this->Authentication->allowUnauthenticated(['item', 'index']);
     }
 }
