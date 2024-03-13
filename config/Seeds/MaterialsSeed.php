@@ -37,7 +37,6 @@ class MaterialsSeed extends AbstractSeed
             ],
         ];
 
-
         $table = $this->table('materials');
         $table->insert($data)->save();
     }
